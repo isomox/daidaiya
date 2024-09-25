@@ -229,23 +229,12 @@
         "text": "组件"
       },
       {
-        "pagePath": "page/extend/index",
-        "iconPath": "@iconPathComponent",
-        "selectedIconPath": "@selectedIconPathComponent",
-        "text": "扩展能力"
-      },
-      {
         "pagePath": "page/API/index",
         "iconPath": "@iconPathAPI",
         "selectedIconPath": "@selectedIconPathAPI",
         "text": "接口"
-      },
-      {
-        "pagePath": "page/cloud/index",
-        "iconPath": "@iconPathCloud",
-        "selectedIconPath": "@selectedIconPathCloud",
-        "text": "云开发"
       }
+     
     ]
   },
   "networkTimeout": {

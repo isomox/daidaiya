@@ -44,6 +44,9 @@ Page({
       url: "https://0366-240e-469-2e06-9540-e0f0-f2b5-d2d8-8a24.ngrok-free.app/putImage", // Replace with your image URL
       method: "GET",
       responseType: "arraybuffer", // Ensure the response is in binary format
+      header: {
+        "ngrok-skip-browser-warning": "true", // Add the custom header
+      },
       success: (res) => {
         // Convert the binary data to base64
         const base64 = wx.arrayBufferToBase64(res.data);

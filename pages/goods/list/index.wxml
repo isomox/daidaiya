@@ -49,6 +49,6 @@
       bind:addcart="handleAddCart"
     />
   </view>
-  <load-more wx:if="{{goodsList.length > 0}}" status="{{loadMoreStatus}}" no-more-text="没有更多了" />
+  <load-more wx:if="{{goodsList.length > 0}}" status="{{loadMoreStatus}}" no-more-text="no more" />
 </view>
 <t-toast id="t-toast" />

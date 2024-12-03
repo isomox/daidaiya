@@ -9,32 +9,20 @@ function mockFetchHome() {
       swiper: genSwiperImageList(),
       tabList: [
         {
-          text: '精选推荐',
-          key: 0,
+          text: "Coding",
+          key: "coding",
         },
         {
-          text: '夏日防晒',
-          key: 1,
+          text: "Video",
+          key: "video",
         },
         {
-          text: '二胎大作战',
-          key: 2,
+          text: "Music",
+          key: "music",
         },
         {
-          text: '人气榜',
-          key: 3,
-        },
-        {
-          text: '好评榜',
-          key: 4,
-        },
-        {
-          text: 'RTX 30',
-          key: 5,
-        },
-        {
-          text: '手机也疯狂',
-          key: 6,
+          text: "LLVM",
+          key: "llvm",
         },
       ],
       activityImg: `${cdnBase}/activity/banner.png`,

@@ -1,0 +1,114 @@
+{
+  "attributes": {
+    "backgroundColor": "#ffffff",
+    "backgroundColorBottom": "#ffffff",
+    "backgroundColorTop": "#ffffff",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "观看历史",
+    "navigationStyle": "default",
+    "pageOrientation": "portrait",
+    "reachBottomDistance": 50,
+    "src": "",
+    "title": "观看历史",
+    "style": {
+      "background": "rgb(242, 242, 242)"
+    }
+  },
+  "dataset": {
+    "query": {
+      "queryLastWatch": {
+        "id": "queryLastWatch",
+        "name": "queryLastWatch",
+        "type": "model",
+        "trigger": "manual",
+        "description": "",
+        "handler": {
+          "module": "platform",
+          "name": "cloud.callDataSource",
+          "params": {
+            "dataSourceName": "playlet_user_watch_hfhc6pa",
+            "methodName": "wedaGetRecordsV2",
+            "params": {
+              "select": {
+                "$master": true,
+                "video_id": true,
+                "watch_section_id": true
+              },
+              "orderBy": [
+                {
+                  "updatedAt": "desc"
+                }
+              ],
+              "getCount": true,
+              ":filter": "{\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": []\n   }\n  ]\n },\n \"relateWhere\": {}\n}",
+              ":pageNumber": "params.pageNo || $w.page.dataset.state.lastWatchQueryParams.pageNo",
+              ":pageSize": "params.pageSize || $w.page.dataset.state.lastWatchQueryParams.pageSize"
+            }
+          }
+        },
+        "listeners": [
+          {
+            "id": "w1qxj8wjn72",
+            "eventName": "success",
+            "type": "platform",
+            "handler": {
+              "name": "callNanoFlow",
+              "module": "platform",
+              "params": {
+                ":data": "$w.queryLastWatch.data",
+                "id": "lastWatchFlow"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ]
+      }
+    },
+    "state": {
+      "lastWatch": {
+        "name": "lastWatch",
+        "label": "",
+        "varType": "state",
+        "dataType": "array",
+        "initialValue": []
+      },
+      "lastWatchTotal": {
+        "name": "lastWatchTotal",
+        "label": "",
+        "varType": "state",
+        "dataType": "number",
+        "initialValue": 0
+      },
+      "lastWatchQueryParams": {
+        "name": "lastWatchQueryParams",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {
+          "pageNo": 1,
+          "pageSize": 10
+        }
+      }
+    }
+  },
+  "extra": {},
+  "listeners": [
+    {
+      "id": "wpght0ms8io",
+      "eventName": "lastWatchFlow.start",
+      "type": "rematch",
+      "handler": {
+        "name": "lastWatchSuccess",
+        "module": "watch-history",
+        "params": {}
+      },
+      "isCapturePhase": false,
+      "noPropagation": false
+    }
+  ],
+  "_ignoreResources": []
+}

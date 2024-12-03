@@ -1,0 +1,84 @@
+{
+  "attributes": {
+    "backgroundColor": "#ffffff",
+    "backgroundColorBottom": "#ffffff",
+    "backgroundColorTop": "#ffffff",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "充值历史",
+    "navigationStyle": "default",
+    "pageOrientation": "portrait",
+    "reachBottomDistance": 50,
+    "src": "",
+    "title": "充值历史"
+  },
+  "dataset": {
+    "query": {
+      "queryOrder": {
+        "id": "queryOrder",
+        "name": "queryOrder",
+        "type": "model",
+        "trigger": "auto",
+        "description": "",
+        "handler": {
+          "module": "platform",
+          "name": "cloud.callDataSource",
+          "params": {
+            "dataSourceName": "playlet_user_order_9s4jlf7",
+            "methodName": "wedaGetRecordsV2",
+            "params": {
+              "select": {
+                "$master": true
+              },
+              ":filter": "{\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"open_id\": {\n       \"$eq\": $w.auth.currentUser.openId || 'oe42x68GFY6iRlP8TGD3aYHDTNSw'\n      }\n     },\n     {\n      \"status\": {\n       \"$eq\": \"2\"\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n}"
+            }
+          }
+        },
+        "listeners": [
+          {
+            "id": "w4slr7o89h0",
+            "eventName": "success",
+            "type": "platform",
+            "handler": {
+              "name": "callNanoFlow",
+              "module": "platform",
+              "params": {
+                "data": "",
+                "id": "getChangeOrder"
+              }
+            },
+            "isCapturePhase": false,
+            "noPropagation": false
+          }
+        ]
+      }
+    },
+    "state": {
+      "chargeOrderRecords": {
+        "name": "chargeOrderRecords",
+        "label": "",
+        "varType": "state",
+        "dataType": "array",
+        "initialValue": []
+      }
+    }
+  },
+  "extra": {},
+  "listeners": [
+    {
+      "id": "wjn9qc6d7kd",
+      "eventName": "getChangeOrder.start",
+      "type": "rematch",
+      "handler": {
+        "name": "getChangeOrderRecords",
+        "module": "recharge-history",
+        "params": {}
+      },
+      "isCapturePhase": false,
+      "noPropagation": false
+    }
+  ],
+  "_ignoreResources": []
+}

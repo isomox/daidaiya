@@ -1,0 +1,21 @@
+[
+  {
+    "id": "image1",
+    "component": "WdImage",
+    "attributes": {
+      "alt": "[图片]",
+      "fit": "widthFix",
+      ":src": "$w.globalCfg.data.records?.[0]?.service_post_addr",
+      "style": {
+        "width": "100vw",
+        "height": "auto"
+      }
+    },
+    "directives": {
+      ":if": true
+    },
+    "extra": {
+      "attributeExtraData": {}
+    }
+  }
+]

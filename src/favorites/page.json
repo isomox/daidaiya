@@ -1,0 +1,320 @@
+[
+  {
+    "id": "listView1",
+    "component": "ListView",
+    "attributes": {
+      "bindConnectMetadata": {},
+      "connectorMethod": {},
+      ":dataSourceData": "$w.page.dataset.state.videoList",
+      "dataSourceType": "expression",
+      "datasource": {
+        "name": "jdList_4grey5c",
+        "type": "datamodal",
+        "extra": {
+          "params": {},
+          "viewId": "view-37qu5ktvgg",
+          "methodName": "wedaGetRecords"
+        }
+      },
+      "emptyText": "暂无数据",
+      "enableTotal": false,
+      "exprToFieldsSchema": "b8c59a0b",
+      "isSetStatus": true,
+      "isSupportApis": false,
+      "loadCompletedText": "",
+      "orderType": "asc",
+      "pageSize": 5,
+      "pagination": "bottomLoad",
+      "queryCondition": [],
+      "template": "imageTextList",
+      "style": {
+        "padding": "8PX 16PX"
+      }
+    },
+    "items": [
+      {
+        "id": "repeater1",
+        "component": "Repeater",
+        "attributes": {
+          ":data": "$w.listView1.records",
+          "forIndex": "index_listView1",
+          "forItem": "item_listView1",
+          "key": "_id",
+          "suffix": "listView1"
+        },
+        "items": [
+          {
+            "id": "container4",
+            "component": "Container",
+            "attributes": {
+              "style": {
+                "width": "100%",
+                "display": "flex",
+                "padding": "6px",
+                "position": "relative",
+                "boxSizing": "border-box",
+                "background": "rgb(255, 255, 255)",
+                "borderRadius": "6px",
+                "marginBottom": "12px"
+              }
+            },
+            "items": [
+              {
+                "id": "container5",
+                "component": "Container",
+                "attributes": {
+                  "style": {
+                    "width": "80PX",
+                    "height": "100%",
+                    "margin": "0px 24 0px 0px",
+                    "overflow": "hidden",
+                    "position": "relative",
+                    "borderRadius": "4px"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "image2",
+                    "component": "WdImage",
+                    "attributes": {
+                      "alt": "[图片]",
+                      "fit": "cover",
+                      ":src": "$w.item_listView1.video_id?.front_pic_addr || 'https://lowcode-4gs26nnz095f6f4d-1307578329.tcloudbaseapp.com/resources/2023-11/lowcode-1498431'",
+                      "style": {
+                        "width": "87px",
+                        "height": "116px",
+                        "borderRadius": "6px"
+                      }
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {}
+              },
+              {
+                "id": "container6",
+                "component": "Container",
+                "attributes": {
+                  "style": {
+                    "gap": "4PX",
+                    "flex": 1,
+                    "display": "flex",
+                    "padding": "10px 0px",
+                    "wordBreak": "break-all",
+                    "alignItems": "flex-start",
+                    "flexDirection": "column",
+                    "justifyContent": "space-between"
+                  }
+                },
+                "items": [
+                  {
+                    "id": "text4",
+                    "component": "WdText",
+                    "attributes": {
+                      "level": "title-8",
+                      "maxLines": "1",
+                      ":text": "$w.item_listView1.video_id?.main_name || '-'",
+                      "style": {
+                        "color": "var(--wd-color-text-default)",
+                        "width": "166PX",
+                        "marginBottom": "20px"
+                      },
+                      "class": "ellipsis"
+                    },
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {
+                      "attributeExtraData": {}
+                    }
+                  },
+                  {
+                    "id": "container8",
+                    "component": "Container",
+                    "attributes": {
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "icon1",
+                        "component": "WdIcon",
+                        "attributes": {
+                          "name": "td:video",
+                          "style": {
+                            "color": "#97A3B7",
+                            "fontSize": "16px",
+                            "marginRight": 4
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text5",
+                        "component": "WdText",
+                        "attributes": {
+                          "level": "body-md",
+                          "maxLines": "2",
+                          "overflow": true,
+                          "text": "观看至",
+                          "style": {
+                            "color": "rgba(0, 0, 0, 0.9)",
+                            "marginRight": "4px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text6",
+                        "component": "WdText",
+                        "attributes": {
+                          "level": "body-md",
+                          "maxLines": "2",
+                          "overflow": true,
+                          ":text": "`第 ${$w.item_listView1.series_number || '-'} 集`",
+                          "style": {
+                            "color": "var(--wd-color-error)"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {}
+                  },
+                  {
+                    "id": "container9",
+                    "component": "Container",
+                    "attributes": {
+                      "style": {
+                        "display": "flex",
+                        "alignItems": "center"
+                      }
+                    },
+                    "items": [
+                      {
+                        "id": "icon2",
+                        "component": "WdIcon",
+                        "attributes": {
+                          "name": "td:refresh",
+                          "style": {
+                            "color": "#97A3B7",
+                            "fontSize": "16px",
+                            "marginRight": 4
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "staticResourceAttribute": [
+                            "src"
+                          ],
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text7",
+                        "component": "WdText",
+                        "attributes": {
+                          "level": "body-md",
+                          "maxLines": "2",
+                          "overflow": true,
+                          ":text": "$w.item_listView1.video_id?.status === '1' ? '更新至' :'已完结'\n",
+                          "style": {
+                            "color": "var(--wd-color-text-placeholder)",
+                            "marginRight": "4px"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      },
+                      {
+                        "id": "text8",
+                        "component": "WdText",
+                        "attributes": {
+                          "level": "body-md",
+                          "maxLines": "2",
+                          "overflow": true,
+                          ":text": "\n`${$w.item_listView1.video_id?.status === '1' ? '第' : '共'} ${$w.item_listView1.video_id?.renew_count || '-'} 集`",
+                          "style": {
+                            "color": "rgba(0, 0, 0, 0.9)"
+                          }
+                        },
+                        "directives": {
+                          ":if": true
+                        },
+                        "extra": {
+                          "attributeExtraData": {}
+                        }
+                      }
+                    ],
+                    "directives": {
+                      ":if": true
+                    },
+                    "extra": {}
+                  }
+                ],
+                "directives": {
+                  ":if": true
+                },
+                "extra": {}
+              }
+            ],
+            "directives": {
+              ":if": true
+            },
+            "extra": {}
+          }
+        ],
+        "directives": {
+          ":if": true
+        },
+        "extra": {
+          "attributeExtraData": {}
+        }
+      }
+    ],
+    "directives": {
+      ":if": true
+    },
+    "scopedStyle": ":scope .weda-list-view__content {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: flex-start;\n}",
+    "extra": {
+      "attributeExtraData": {}
+    }
+  }
+]

@@ -1,0 +1,1351 @@
+{
+  "dataset": {
+    "query": {
+      "globalCfg": {
+        "id": "globalCfg",
+        "name": "globalCfg",
+        "type": "model",
+        "trigger": "auto",
+        "description": "",
+        "handler": {
+          "module": "platform",
+          "name": "cloud.callDataSource",
+          "params": {
+            "dataSourceName": "playlet_mini_program_manage_msvyqu7",
+            "methodName": "wedaGetRecordsV2",
+            "params": {
+              "select": {
+                "$master": true
+              },
+              "orderBy": [
+                {
+                  "updatedAt": "asc"
+                }
+              ],
+              "pageSize": 1,
+              "pageNumber": 1,
+              ":filter": "{\n \"where\": {\n  \"$and\": [\n   {\n    \"$and\": [\n     {\n      \"mini_program_id\": {\n       \"$eq\": $w.app.mpAppId || 'wx3bd76058b11e2e6f'\n      }\n     }\n    ]\n   }\n  ]\n },\n \"relateWhere\": {}\n}"
+            }
+          }
+        },
+        "listeners": []
+      },
+      "queryCharge": {
+        "id": "queryCharge",
+        "name": "queryCharge",
+        "type": "apis",
+        "trigger": "auto",
+        "description": "",
+        "handler": {
+          "module": "platform",
+          "name": "cloud.callDataSource",
+          "params": {
+            "dataSourceName": "zdydm_xyqe7jc",
+            "methodName": "payConfigList",
+            ":params": "({\n  agent_id: $w.app.dataset.state.launchQuery?.invite_code,\n  tfid: $w.app.dataset.state.launchQuery?.tfid\n})"
+          }
+        },
+        "listeners": []
+      }
+    },
+    "state": {
+      "isIOS": {
+        "name": "isIOS",
+        "label": "",
+        "varType": "state",
+        "dataType": "boolean",
+        "initialValue": false
+      },
+      "adScene": {
+        "name": "adScene",
+        "label": "加密 URL Link 打开小程序的场景值：1194：微信外打开的场景值；1167：微信内打开会调整为开放标签打开小程序；1184：视频号链接打开小程序；1200：视频号广告打开小程序；1201：视频号广告详情页打开小程序；1228：视频号原生广告组件打开小程序",
+        "varType": "state",
+        "dataType": "array",
+        "initialValue": [
+          1194,
+          1167,
+          1184,
+          1200,
+          1201,
+          1228
+        ],
+        "enableSyncLocal": false
+      },
+      "payInfo": {
+        "name": "payInfo",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {
+          "env": 0,
+          "mode": "",
+          "zoneId": "1",
+          "offerId": "",
+          "platform": "",
+          "originalId": "",
+          "currencyType": "CNY"
+        }
+      },
+      "navstyle": {
+        "name": "navstyle",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {
+          "navBarHeight": "72px",
+          "titleBarHeight": "48px",
+          "statusBarHeight": "24px"
+        }
+      },
+      "chargeStyle": {
+        "name": "chargeStyle",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {
+          "year_membership": {
+            "tag": "年度VIP",
+            "back": "linear-gradient(271deg, #211F20 -38.97%, #4A403E 97.05%)",
+            "logo": "/resources/2024-03/lowcode-1693430",
+            "color": "#FFF",
+            "tagColor": "rgba(0, 0, 0, 0.90)",
+            "tagBackColor": "#F2D2AE"
+          },
+          "month_membership": {
+            "tag": "月度VIP",
+            "back": "linear-gradient(90deg, #ECE7FB -27.52%, #C4B6F5 100%)",
+            "logo": "/resources/2024-03/lowcode-1693432",
+            "color": "#4C2878",
+            "tagColor": "#6B2E0B",
+            "tagBackColor": "#FCE098"
+          },
+          "quarter_membership": {
+            "tag": "季度VIP",
+            "back": "linear-gradient(270deg, #F4C473 0.27%, #FFF1CE 103.67%)",
+            "logo": "/resources/2024-03/lowcode-1693431",
+            "color": "#8B4F00",
+            "tagColor": "#FFF",
+            "tagBackColor": "linear-gradient(90deg, #B77730 0%, #9F6522 100%)"
+          }
+        }
+      },
+      "launchQuery": {
+        "name": "launchQuery",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {}
+      },
+      "videoUserInfo": {
+        "name": "videoUserInfo",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {}
+      },
+      "playerManagerInfo": {
+        "name": "playerManagerInfo",
+        "label": "",
+        "varType": "state",
+        "dataType": "object",
+        "initialValue": {
+          "currentVideo": null,
+          "currentAccount": null
+        }
+      }
+    },
+    "params": {}
+  },
+  "dependencies": {
+    "@tcwd/CLOUDBASE_BUSSINESS": "weda:components?v=1.28.11",
+    "@tcwd/CLOUDBASE_STANDARD": "weda:components?v=1.10.4",
+    "@tcwd/gsd-h5-react": "weda:components?v=3.11.11"
+  },
+  "extra": {
+    "domain": "",
+    "miniprogramPlugins": [],
+    "npmDependencies": {},
+    "plugins": [],
+    "rootPath": "",
+    "originHistoryId": "4869945",
+    "enableLoading": false,
+    "disabled": false,
+    "enableAsyncMaterials": false,
+    "clientId": "AOJ8yAABgQSrcsW9qig",
+    "loginConfigVersion": "",
+    "enableLoginStatusShare": false,
+    "pages": [
+      "customerService",
+      "favorites",
+      "follow-series",
+      "index",
+      "invite",
+      "my",
+      "official-account",
+      "recharge-history",
+      "recharge",
+      "recommend",
+      "series",
+      "uq1q4jsfla",
+      "watch-history"
+    ],
+    "processPages": [],
+    "mpAppId": "wx3b4d181a1ac4704a",
+    "endpointType": "",
+    "resourceAppId": "",
+    "envId": "lowcode-7gzmlcdsc6cc9d5a",
+    "uin": "100012087549"
+  },
+  "id": "app-bAneoZuS",
+  "label": "短剧小程序",
+  "main": "index",
+  "schemaVersion": "4.0.0",
+  "externalResources": [],
+  "theme": {
+    "meta": {
+      "changed": true,
+      "refTheme": {
+        "id": "food",
+        "version": "1.0.0"
+      },
+      "shadowLevel": "md"
+    },
+    "cssVarConfig": {
+      "_": {
+        "--wd-font-base": "16px",
+        "--wd-shadow-lg": "0px 0px 20px 0px rgba(0, 0, 0, 0.20)",
+        "--wd-shadow-sm": "0px 2px 4px 0px rgba(0, 0, 0, 0.10)",
+        "--wd-color-brand": "rgb(140, 111, 255)",
+        "--wd-color-error": "rgb(227, 77, 89)",
+        "--wd-color-bg-page": "rgb(243, 243, 243)",
+        "--wd-color-success": "rgb(0, 168, 112)",
+        "--wd-color-warning": "rgb(237, 123, 47)",
+        "--wd-shadow-default": "0px 2px 8px 0px rgba(0, 0, 0, 0.16)",
+        "--wd-color-brand-dark": "rgb(76, 61, 179)",
+        "--wd-color-error-dark": "rgb(149, 17, 20)",
+        "--wd-color-text-brand": "rgb(140, 111, 255)",
+        "--wd-color-brand-focus": "rgb(241, 235, 255)",
+        "--wd-color-brand-hover": "rgb(177, 153, 255)",
+        "--wd-color-brand-light": "rgb(245, 240, 255)",
+        "--wd-color-error-focus": "rgb(249, 215, 217)",
+        "--wd-color-error-hover": "rgb(243, 109, 120)",
+        "--wd-color-error-light": "rgb(253, 236, 238)",
+        "--wd-color-text-second": "rgba(0, 0, 0, 0.6)",
+        "--wd-color-bg-container": "rgb(255, 255, 255)",
+        "--wd-color-border-hover": "rgb(197, 197, 197)",
+        "--wd-color-brand-active": "rgb(107, 85, 217)",
+        "--wd-color-error-active": "rgb(201, 53, 63)",
+        "--wd-color-success-dark": "rgb(4, 79, 42)",
+        "--wd-color-text-default": "rgba(0, 0, 0, 0.9)",
+        "--wd-color-text-inverse": "rgb(255, 255, 255)",
+        "--wd-color-warning-dark": "rgb(132, 43, 11)",
+        "--wd-color-success-focus": "rgb(188, 235, 220)",
+        "--wd-color-success-hover": "rgb(72, 199, 156)",
+        "--wd-color-success-light": "rgb(232, 248, 242)",
+        "--wd-color-text-disabled": "rgba(0, 0, 0, 0.26)",
+        "--wd-color-warning-focus": "rgb(249, 224, 199)",
+        "--wd-color-warning-hover": "rgb(242, 153, 95)",
+        "--wd-color-warning-light": "rgb(254, 243, 230)",
+        "--wd-color-border-default": "rgb(220, 220, 220)",
+        "--wd-color-brand-disabled": "rgb(210, 194, 255)",
+        "--wd-color-error-disabled": "rgb(248, 185, 190)",
+        "--wd-color-success-active": "rgb(7, 141, 92)",
+        "--wd-color-warning-active": "rgb(211, 90, 33)",
+        "--wd-color-border-separator": "rgb(231, 231, 231)",
+        "--wd-color-success-disabled": "rgb(133, 219, 190)",
+        "--wd-color-text-placeholder": "rgba(0, 0, 0, 0.4)",
+        "--wd-color-warning-disabled": "rgb(247, 199, 151)",
+        "--wd-color-bg-container-hover": "rgba(0, 0, 0, 0.05)",
+        "--wd-color-bg-container-active": "rgba(0, 0, 0, 0.1)",
+        "--wd-color-bg-secondarycontainer": "rgb(243, 243, 243)",
+        "--wd-color-bg-secondarycontainer-hover": "rgb(238, 238, 238)",
+        "--wd-color-bg-secondarycontainer-active": "rgb(220, 220, 220)"
+      },
+      "PCWEB": {
+        "--wd-font-size-2": "0.75rem",
+        "--wd-font-size-3": "0.875rem",
+        "--wd-font-size-4": "1rem",
+        "--wd-border-radius": "1rem",
+        "--wd-font-weight-1": "400",
+        "--wd-font-weight-3": "400",
+        "--wd-border-radius-lg": "1.25rem",
+        "--wd-border-radius-md": "1rem",
+        "--wd-font-size-title-1": "4rem",
+        "--wd-font-size-title-2": "3rem",
+        "--wd-font-size-title-3": "2.25rem",
+        "--wd-font-size-title-4": "1.75rem",
+        "--wd-font-size-title-5": "1.25rem",
+        "--wd-font-size-title-6": "1.125rem",
+        "--wd-font-size-title-7": "1rem",
+        "--wd-font-size-title-8": "0.875rem",
+        "--wd-font-size-title-9": "0.75rem",
+        "--wd-font-line-height-1": "1.5",
+        "--wd-font-line-height-3": "1.5",
+        "--wd-font-weight-regular": "400",
+        "--wd-font-weight-title-1": "600",
+        "--wd-font-weight-title-2": "600",
+        "--wd-font-weight-title-3": "600",
+        "--wd-font-weight-title-4": "600",
+        "--wd-font-weight-title-5": "600",
+        "--wd-font-weight-title-6": "600",
+        "--wd-font-weight-title-7": "600",
+        "--wd-font-weight-title-8": "600",
+        "--wd-font-weight-title-9": "600",
+        "--wd-font-line-height-default": "1.5",
+        "--wd-font-line-height-title-1": "1.5",
+        "--wd-font-line-height-title-2": "1.5",
+        "--wd-font-line-height-title-3": "1.5",
+        "--wd-font-line-height-title-4": "1.5",
+        "--wd-font-line-height-title-5": "1.5",
+        "--wd-font-line-height-title-6": "1.5",
+        "--wd-font-line-height-title-7": "1.2",
+        "--wd-font-line-height-title-8": "1.2",
+        "--wd-font-line-height-title-9": "1.2"
+      },
+      "MOBILE": {
+        "--wd-font-size-3": "0.75rem",
+        "--wd-font-size-4": "0.875rem",
+        "--wd-font-size-5": "1rem",
+        "--wd-border-radius": "1.25rem",
+        "--wd-font-weight-1": "400",
+        "--wd-font-weight-3": "400",
+        "--wd-border-radius-lg": "1.25rem",
+        "--wd-border-radius-md": "1rem",
+        "--wd-font-size-title-1": "4rem",
+        "--wd-font-size-title-2": "3rem",
+        "--wd-font-size-title-3": "2.25rem",
+        "--wd-font-size-title-4": "1.75rem",
+        "--wd-font-size-title-5": "1.25rem",
+        "--wd-font-size-title-6": "1.125rem",
+        "--wd-font-size-title-7": "1.125rem",
+        "--wd-font-size-title-8": "1rem",
+        "--wd-font-size-title-9": "0.875rem",
+        "--wd-font-line-height-1": "1.5",
+        "--wd-font-line-height-3": "1.5",
+        "--wd-font-weight-regular": "400",
+        "--wd-font-weight-title-1": "600",
+        "--wd-font-weight-title-2": "600",
+        "--wd-font-weight-title-3": "600",
+        "--wd-font-weight-title-4": "600",
+        "--wd-font-weight-title-5": "600",
+        "--wd-font-weight-title-6": "600",
+        "--wd-font-weight-title-7": "600",
+        "--wd-font-weight-title-8": "600",
+        "--wd-font-weight-title-9": "600",
+        "--wd-font-line-height-default": "1.5",
+        "--wd-font-line-height-title-1": "1.5",
+        "--wd-font-line-height-title-2": "1.5",
+        "--wd-font-line-height-title-3": "1.5",
+        "--wd-font-line-height-title-4": "1.5",
+        "--wd-font-line-height-title-5": "1.5",
+        "--wd-font-line-height-title-6": "1.5",
+        "--wd-font-line-height-title-7": "1.2",
+        "--wd-font-line-height-title-8": "1.2",
+        "--wd-font-line-height-title-9": "1.2"
+      }
+    }
+  },
+  "templates": [
+    {
+      "id": "layout_myi4a0pb",
+      "items": [
+        {
+          "id": "layout_container1",
+          "component": "Container",
+          "attributes": {
+            "_formauto": "formRadio",
+            "style": {
+              "minHeight": "100vh",
+              "paddingBottom": "calc(64px + env(safe-area-inset-bottom))"
+            }
+          },
+          "items": [
+            {
+              "id": "layout_slot1",
+              "component": "Slot",
+              "attributes": {
+                "_formauto": "formRadio",
+                "name": "default"
+              },
+              "directives": {
+                ":if": true
+              },
+              "extra": {
+                "attributeExtraData": {}
+              }
+            },
+            {
+              "id": "layout_tabBar1",
+              "module": "CLOUDBASE_STANDARD",
+              "component": "TabBar",
+              "attributes": {
+                "_formauto": "formRadio",
+                "activeColor": "#13161B",
+                "backgroundColor": "#FFF",
+                "backgroundImage": "",
+                "backgroundType": "color",
+                "color": "#BCC4D0",
+                "iconSize": 40,
+                "layoutType": "iconText",
+                "package": "",
+                "position": "bottom",
+                "route": false,
+                "routeType": "redirectTo",
+                "tabbar": "",
+                "tabs": [
+                  {
+                    "icon": "/resources/2023-11/lowcode-1498021",
+                    "name": "follow-series",
+                    "title": "追剧",
+                    "iconFont": "custom",
+                    "__sortid__": "4m4_-DiW7JR7Ys61cwLFO",
+                    "activeIcon": "/resources/2023-11/lowcode-1498018",
+                    "withParams": false
+                  },
+                  {
+                    "icon": "/resources/2023-11/lowcode-1498019",
+                    "name": "index",
+                    "title": "小剧场",
+                    "iconFont": "custom",
+                    "__sortid__": "tuNB0ZqHkBrcqGBeloXDn",
+                    "activeIcon": "/resources/2023-11/lowcode-1498020",
+                    "withParams": false
+                  },
+                  {
+                    "icon": "/resources/2023-11/lowcode-1498022",
+                    "title": "推荐",
+                    "iconFont": "custom",
+                    "__sortid__": "wVbC4bE3C3xWOwXeriz4N",
+                    "activeIcon": "/resources/2023-11/lowcode-1498023",
+                    "withParams": false,
+                    ":name": "'recommend'"
+                  },
+                  {
+                    "icon": "/resources/2023-11/lowcode-1498017",
+                    "name": "my",
+                    "title": "我的",
+                    "iconFont": "custom",
+                    "__sortid__": "dRkgzI6f3ijVtKHkFUzPD",
+                    "activeIcon": "/resources/2023-11/lowcode-1498024",
+                    "withParams": false
+                  }
+                ],
+                ":value": "$w.page.id",
+                "style": {
+                  "paddingTop": "8px",
+                  "paddingBottom": "calc(8px + env(safe-area-inset-bottom))"
+                }
+              },
+              "items": [
+                {
+                  "id": "tabbar",
+                  "component": "",
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {}
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {
+                "staticResourceAttribute": [
+                  "tabs.*.icon",
+                  "tabs.*.activeIcon",
+                  "backgroundImage"
+                ],
+                "attributeExtraData": {}
+              }
+            }
+          ],
+          "directives": {
+            ":if": true
+          },
+          "extra": {
+            "attributeExtraData": {}
+          }
+        }
+      ],
+      "data": {
+        "properties": {
+          "default": {
+            "type": "slot"
+          }
+        }
+      },
+      "name": "layout_myi4a0pb",
+      "label": "底部Tab"
+    },
+    {
+      "id": "layout_p1hn9s9m",
+      "items": [
+        {
+          "id": "layout_slot1",
+          "component": "Slot",
+          "attributes": {
+            "name": "default"
+          },
+          "directives": {
+            ":if": true
+          },
+          "extra": {
+            "attributeExtraData": {}
+          }
+        },
+        {
+          "id": "layout_container5",
+          "component": "Container",
+          "attributes": {
+            "data": {},
+            "style": {
+              "padding": "20px"
+            }
+          },
+          "items": [
+            {
+              "id": "layout_container1",
+              "component": "Container",
+              "attributes": {
+                "style": {
+                  "display": "flex",
+                  "alignItems": "center",
+                  "flexDirection": "row"
+                }
+              },
+              "items": [
+                {
+                  "id": "layout_text1",
+                  "component": "WdText",
+                  "attributes": {
+                    "level": "body-lg",
+                    "maxLines": "1",
+                    "text": "我的余额：",
+                    "style": {
+                      "fontWeight": "bolder"
+                    }
+                  },
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                },
+                {
+                  "id": "layout_text2",
+                  "component": "WdText",
+                  "attributes": {
+                    "level": "body-lg",
+                    "maxLines": "1",
+                    ":text": "$w.app.dataset.state.playerManagerInfo?.currentAccount?.[0]?.balance || 0",
+                    "style": {
+                      "color": "var(--wd-color-error)",
+                      "fontWeight": "bolder",
+                      "marginRight": "10px"
+                    }
+                  },
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                },
+                {
+                  "id": "layout_text3",
+                  "component": "WdText",
+                  "attributes": {
+                    "level": "body-lg",
+                    "maxLines": "1",
+                    "text": "金豆",
+                    "style": {
+                      "fontWeight": "bolder",
+                      "marginRight": 4
+                    }
+                  },
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {}
+            },
+            {
+              "id": "layout_container2",
+              "component": "Container",
+              "attributes": {
+                "style": {
+                  "display": "flex",
+                  "alignItems": "center",
+                  "flexDirection": "row"
+                }
+              },
+              "items": [
+                {
+                  "id": "layout_text4",
+                  "component": "WdText",
+                  "attributes": {
+                    "maxLines": "1",
+                    ":text": "`解锁第 ${$comp.props.data.serialNo} 集需要 ${$w.app.dataset.state.playerManagerInfo?.currentVideo?.recharge_gold_count} 金豆`"
+                  },
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {}
+            },
+            {
+              "id": "layout_listView1",
+              "component": "ListView",
+              "attributes": {
+                "bindConnectMetadata": {},
+                "connectorMethod": {},
+                ":dataSourceData": "$w.queryCharge.data?.records",
+                "dataSourceType": "expression",
+                "datasource": {
+                  "name": "splblylian_siru6bh",
+                  "type": "datamodal",
+                  "extra": {
+                    "params": {},
+                    "viewId": "view-4qoqvk2jyo",
+                    "methodName": "wedaGetRecords"
+                  }
+                },
+                "emptyText": "暂无数据",
+                "enableTotal": false,
+                "exprToFieldsSchema": "06744e9f",
+                "isSetStatus": true,
+                "isSupportApis": false,
+                "orderType": "asc",
+                "pageSize": 10,
+                "pagination": "none",
+                "queryCondition": [],
+                "template": "cardList",
+                "style": {
+                  "padding": "8PX 0PX",
+                  "overflowX": "hidden"
+                }
+              },
+              "items": [
+                {
+                  "id": "layout_grid1",
+                  "component": "Grid",
+                  "attributes": {
+                    "gutterX": "16px",
+                    "gutterY": "16px",
+                    "style": {
+                      "width": "100%",
+                      "padding": "8PX 0PX"
+                    }
+                  },
+                  "items": [
+                    {
+                      "id": "layout_row1",
+                      "component": "Row",
+                      "attributes": {
+                        "alignItems": "stretch",
+                        "colCount": 12,
+                        "gutterX": "16px",
+                        "style": {
+                          "marginLeft": "unset",
+                          "marginRight": "unset",
+                          "marginBottom": "unset"
+                        }
+                      },
+                      "items": [
+                        {
+                          "id": "layout_repeater1",
+                          "component": "Repeater",
+                          "attributes": {
+                            ":data": "$w.layout_listView1.records",
+                            "forIndex": "index_listView1",
+                            "forItem": "item_listView1",
+                            "key": "_id",
+                            "suffix": "listView1"
+                          },
+                          "items": [
+                            {
+                              "id": "layout_col1",
+                              "component": "Col",
+                              "attributes": {
+                                "alignSelf": "auto",
+                                "lgWidthType": {
+                                  "type": "twelve-adjust",
+                                  "unit": "px",
+                                  "value": "2"
+                                },
+                                "widthType": {
+                                  "type": "twelve-adjust",
+                                  "unit": "px",
+                                  "value": "6"
+                                },
+                                "style": {
+                                  "gap": "8PX",
+                                  "width": "48%",
+                                  "paddingLeft": "0px",
+                                  "paddingRight": "0px"
+                                }
+                              },
+                              "items": [
+                                {
+                                  "id": "layout_container6",
+                                  "component": "Container",
+                                  "attributes": {
+                                    "style": {
+                                      "gap": "4PX",
+                                      "display": "flex",
+                                      "padding": "28px 18px 20px",
+                                      "overflow": "hidden",
+                                      "position": "relative",
+                                      "wordBreak": "break-all",
+                                      "alignItems": "flex-start",
+                                      "borderRadius": "6px",
+                                      "flexDirection": "column"
+                                    }
+                                  },
+                                  "items": [
+                                    {
+                                      "id": "layout_text5",
+                                      "component": "WdText",
+                                      "attributes": {
+                                        "maxLines": "1",
+                                        ":text": "$w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.tag || ($w.item_listView1.is_super ? '特惠' : '')",
+                                        "style": {
+                                          "top": "0px",
+                                          "left": "0px",
+                                          "color": "rgb(107, 46, 11)",
+                                          "padding": "2px 6px",
+                                          "fontSize": "12px",
+                                          "position": "absolute",
+                                          "background": "rgb(252, 224, 152)",
+                                          "borderRadius": "6px 2px 2px"
+                                        }
+                                      },
+                                      "directives": {
+                                        ":if": "$w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.tag || $w.item_listView1.is_super"
+                                      },
+                                      ":style": "({\n  background: $w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.tagBackColor || '#FCE098',\n  color: $w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.tagColor || '#6B2E0B'\n})",
+                                      "extra": {
+                                        "attributeExtraData": {}
+                                      }
+                                    },
+                                    {
+                                      "id": "layout_container7",
+                                      "component": "Container",
+                                      "attributes": {
+                                        "data": {},
+                                        "style": {
+                                          "zIndex": 1,
+                                          "display": "flex",
+                                          "position": "relative",
+                                          "alignItems": "center"
+                                        }
+                                      },
+                                      "items": [
+                                        {
+                                          "id": "layout_text11",
+                                          "component": "WdText",
+                                          "attributes": {
+                                            "level": "title-7",
+                                            "maxLines": "1",
+                                            ":text": "`¥ ${$w.item_listView1.amount || '-'}`"
+                                          },
+                                          "directives": {
+                                            ":if": true
+                                          },
+                                          ":style": "({\n  color: $w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.color || ($w.item_listView1.is_super ? 'var(--wd-color-text-inverse)' : 'var(--wd-color-text-second)')\n})",
+                                          "extra": {
+                                            "attributeExtraData": {}
+                                          }
+                                        },
+                                        {
+                                          "id": "layout_text12",
+                                          "component": "WdText",
+                                          "attributes": {
+                                            "level": "body-sm",
+                                            "maxLines": "1",
+                                            ":text": "$w.item_listView1.tips",
+                                            "style": {
+                                              "color": "white",
+                                              "padding": "2px 10px",
+                                              "marginLeft": "8px",
+                                              "borderRadius": "26px"
+                                            }
+                                          },
+                                          "directives": {
+                                            ":if": "!!$w.item_listView1.tips"
+                                          },
+                                          ":style": "({\n  background: 'var(--wd-color-error)'\n})",
+                                          "extra": {
+                                            "attributeExtraData": {}
+                                          }
+                                        }
+                                      ],
+                                      "directives": {
+                                        ":if": true
+                                      },
+                                      "extra": {
+                                        "attributeExtraData": {}
+                                      }
+                                    },
+                                    {
+                                      "id": "layout_text10",
+                                      "component": "WdText",
+                                      "attributes": {
+                                        "level": "body-md",
+                                        "maxLines": "3",
+                                        "overflow": true,
+                                        ":text": "$w.item_listView1.type !== 'gold_bean' ? $w.item_listView1.description : `${$w.item_listView1.gold_bean_count ? `${$w.item_listView1.gold_bean_count}金豆` : ''}${$w.item_listView1.give_gold_count ? ` + ${$w.item_listView1.give_gold_count}金豆` : ''}`",
+                                        "style": {
+                                          "color": "var(--wd-color-text-second)",
+                                          "zIndex": 1,
+                                          "position": "relative",
+                                          "whiteSpace": "nowrap"
+                                        }
+                                      },
+                                      "directives": {
+                                        ":if": true
+                                      },
+                                      ":style": "({\n  color: $w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.color || ($w.item_listView1.is_super ? 'var(--wd-color-text-inverse)' : 'var(--wd-color-text-second)')\n})",
+                                      "extra": {
+                                        "attributeExtraData": {}
+                                      }
+                                    },
+                                    {
+                                      "id": "layout_image2",
+                                      "component": "WdImage",
+                                      "attributes": {
+                                        "alt": "[图片]",
+                                        "fit": "heightFix",
+                                        "src": "/resources/2023-12/lowcode-1500287",
+                                        "style": {
+                                          "top": "-40px",
+                                          "right": "-20px",
+                                          "height": "170px",
+                                          "position": "absolute"
+                                        }
+                                      },
+                                      "directives": {
+                                        ":if": "!$w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.logo"
+                                      },
+                                      "extra": {
+                                        "staticResourceAttribute": [
+                                          "src"
+                                        ],
+                                        "attributeExtraData": {}
+                                      }
+                                    },
+                                    {
+                                      "id": "layout_image3",
+                                      "component": "WdImage",
+                                      "attributes": {
+                                        "alt": "[图片]",
+                                        "fit": "heightFix",
+                                        ":src": "$w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.logo || '/resources/2023-12/lowcode-1500287'",
+                                        "style": {
+                                          "top": "0px",
+                                          "right": "0px",
+                                          "height": "100%",
+                                          "position": "absolute"
+                                        }
+                                      },
+                                      "directives": {
+                                        ":if": "$w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.logo"
+                                      },
+                                      "extra": {
+                                        "staticResourceAttribute": [
+                                          "src"
+                                        ],
+                                        "attributeExtraData": {}
+                                      }
+                                    }
+                                  ],
+                                  "listeners": [
+                                    {
+                                      "id": "wqz06xvzpy0",
+                                      "eventName": "tap",
+                                      "type": "platform",
+                                      "handler": {
+                                        "name": "utils.If",
+                                        "module": "platform",
+                                        "params": {
+                                          "alternate": false,
+                                          ":condition": "If($w.app.dataset.state.isIOS, true, false)",
+                                          "consequent": true
+                                        }
+                                      },
+                                      "isCapturePhase": false,
+                                      "noPropagation": false
+                                    },
+                                    {
+                                      "id": "wtqkid94onv",
+                                      "eventName": "wqz06xvzpy0.success",
+                                      "type": "platform",
+                                      "handler": {
+                                        "name": "showModal",
+                                        "module": "platform",
+                                        "params": {
+                                          "cancelColor": "#000000",
+                                          "cancelText": "取消",
+                                          "confirmColor": "#8C6FFF",
+                                          "confirmText": "确认",
+                                          "content": "由于相关规范，IOS下该功能暂不可用",
+                                          "showCancel": false,
+                                          "title": "提示"
+                                        }
+                                      },
+                                      "isCapturePhase": false,
+                                      "noPropagation": false
+                                    },
+                                    {
+                                      "id": "wswvk34puiy",
+                                      "eventName": "wqz06xvzpy0.fail",
+                                      "type": "platform",
+                                      "handler": {
+                                        "name": "common.requestPayment",
+                                        "module": "platform",
+                                        "params": {
+                                          ":target": "$w.item_listView1"
+                                        }
+                                      },
+                                      "isCapturePhase": false,
+                                      "noPropagation": false
+                                    }
+                                  ],
+                                  "directives": {
+                                    ":if": true
+                                  },
+                                  ":style": "({\n  background: $w.app.dataset.state.chargeStyle[$w.item_listView1.type]?.back || ($w.item_listView1.is_super ? 'linear-gradient(90deg, #9D6FFF -27.52%, #B79EFF 100%)' : '#E3E6EB')\n})",
+                                  "scopedStyle": ":scope:hover {\n  opacity: .6;\n}",
+                                  "extra": {}
+                                }
+                              ],
+                              "directives": {
+                                ":if": true
+                              },
+                              "extra": {
+                                "attributeExtraData": {}
+                              }
+                            }
+                          ],
+                          "directives": {
+                            ":if": true
+                          },
+                          "extra": {
+                            "attributeExtraData": {}
+                          }
+                        }
+                      ],
+                      "directives": {
+                        ":if": true
+                      },
+                      "scopedStyle": ":root .wd-grid-row {\n  justify-content: space-between;\n}",
+                      "extra": {
+                        "attributeExtraData": {}
+                      }
+                    }
+                  ],
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {
+                "attributeExtraData": {}
+              }
+            }
+          ],
+          "directives": {
+            ":if": true
+          },
+          "extra": {
+            "attributeExtraData": {}
+          }
+        }
+      ],
+      "data": {
+        "properties": {
+          "default": {
+            "type": "slot"
+          },
+          "dramaId": {
+            "type": "string",
+            "default": ""
+          },
+          "extParam": {
+            "type": "string",
+            "default": ""
+          },
+          "playerId": {
+            "type": "string",
+            "default": ""
+          },
+          "serialNo": {
+            "type": "number",
+            "default": 0
+          },
+          "srcAppid": {
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "name": "layout_p1hn9s9m",
+      "label": "金豆弹窗"
+    },
+    {
+      "id": "layout_qegz0wda",
+      "items": [
+        {
+          "id": "layout_slot1",
+          "component": "Slot",
+          "attributes": {
+            "name": "default"
+          },
+          "directives": {
+            ":if": true
+          },
+          "extra": {
+            "attributeExtraData": {}
+          }
+        },
+        {
+          "id": "layout_modal1",
+          "label": "订阅弹窗",
+          "component": "WdModal",
+          "attributes": {
+            "closeType": [
+              "mask"
+            ],
+            "defaultMaskShow": true,
+            "defaultShow": true,
+            "position": "center",
+            "template": "default",
+            "style": {
+              "width": "84%"
+            }
+          },
+          "items": [
+            {
+              "id": "headerSlot",
+              "component": "",
+              "items": [
+                {
+                  "id": "layout_text1",
+                  "component": "WdText",
+                  "attributes": {
+                    "level": "title-6",
+                    "maxLines": "1",
+                    "text": "提示"
+                  },
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                },
+                {
+                  "id": "layout_icon1",
+                  "label": "关闭按钮",
+                  "component": "WdIcon",
+                  "attributes": {
+                    "name": "td:close",
+                    ":size": "$w.wedaContext?.platforms?.includes(`MOBILEWEB`) ? `md` : `sm`",
+                    "style": {
+                      "color": "rgba(0, 0, 0, 0.6)"
+                    }
+                  },
+                  "listeners": [
+                    {
+                      "id": "wdModal762",
+                      "eventName": "tap",
+                      "type": "platform",
+                      "handler": {
+                        "name": "invoke",
+                        "module": "platform",
+                        "params": {
+                          "component": "layout_modal1",
+                          "method": "close",
+                          "params": {
+                            "info": ""
+                          }
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    }
+                  ],
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {}
+            },
+            {
+              "id": "contentSlot",
+              "component": "",
+              "items": [
+                {
+                  "id": "layout_text2",
+                  "component": "WdText",
+                  "attributes": {
+                    "level": "body-lg",
+                    "maxLines": "1",
+                    "text": "喜欢这部剧就加入订阅吧，下次观看更方便",
+                    "style": {
+                      "textAlign": "left",
+                      "whiteSpace": "pre-wrap"
+                    }
+                  },
+                  "directives": {
+                    ":if": true
+                  },
+                  "scopedStyle": ":root .wd-typography {\n  white-space: pre-wrap;\n}",
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {}
+            },
+            {
+              "id": "footerSlot",
+              "component": "",
+              "items": [
+                {
+                  "id": "layout_button1",
+                  "label": "取消按钮",
+                  "component": "WdButton",
+                  "attributes": {
+                    "icon": "success",
+                    "text": "继续退出",
+                    "theme": "secondary",
+                    "variant": "outline",
+                    "style": {
+                      "fontSize": "16px",
+                      "fontWeight": "normal",
+                      "borderRadius": "20px"
+                    }
+                  },
+                  "listeners": [
+                    {
+                      "id": "wxqulyykydb",
+                      "eventName": "tap",
+                      "type": "platform",
+                      "handler": {
+                        "name": "invoke",
+                        "module": "platform",
+                        "params": {
+                          "component": "layout_modal1",
+                          "method": "close",
+                          "params": {
+                            "info": ""
+                          }
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    }
+                  ],
+                  "directives": {
+                    ":if": true
+                  },
+                  "scopedStyle": ":scope .wd-btn__text {\n  color: #000;\n}",
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                },
+                {
+                  "id": "layout_button2",
+                  "label": "确认按钮",
+                  "component": "WdButton",
+                  "attributes": {
+                    "icon": "success",
+                    "text": "点击订阅",
+                    "style": {
+                      "fontSize": "16px",
+                      "background": "rgb(139, 110, 254)",
+                      "fontWeight": "normal",
+                      "borderRadius": "20px"
+                    }
+                  },
+                  "listeners": [
+                    {
+                      "id": "wdjrpb6zpb4",
+                      "eventName": "tap",
+                      "type": "platform",
+                      "handler": {
+                        "name": "requestSubscribeMessage",
+                        "module": "platform",
+                        "params": {
+                          "params": {
+                            ":tmplIds": "[$w.globalCfg.data?.records?.[0]?.series_update_comment || '', $w.globalCfg.data?.records?.[0]?.newtv_online_comment || ''].filter(v => !!v)"
+                          }
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    },
+                    {
+                      "id": "wgy6z13xzzm",
+                      "eventName": "wdjrpb6zpb4.success",
+                      "type": "platform",
+                      "handler": {
+                        "name": "utils.If",
+                        "module": "platform",
+                        "params": {
+                          "alternate": false,
+                          ":condition": "[$w.globalCfg.data?.records?.[0]?.series_update_comment || '', $w.globalCfg.data?.records?.[0]?.newtv_online_comment || ''].filter(v => !!v).some(v => event?.detail?.res?.[v] === 'accept')",
+                          "consequent": true
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    },
+                    {
+                      "id": "w7inewzsn1d",
+                      "eventName": "wgy6z13xzzm.success",
+                      "type": "platform",
+                      "handler": {
+                        "name": "cloud.callDataSource",
+                        "module": "platform",
+                        "params": {
+                          "dataSourceName": "playlet_subscribe_manage_96olcl2",
+                          "methodName": "wedaCreateV2",
+                          "options": {
+                            "showToast": false,
+                            "showLoading": true
+                          },
+                          "outputs": {},
+                          "params": {
+                            "data": {
+                              "message_type": "1",
+                              ":mini_program_id": "({_id: $w.app.mpAppId})",
+                              ":user_id": "({_id: $w.app.dataset.state.videoUserInfo?._id})",
+                              ":video_id": "({_id: $w.page.dataset.params.id})"
+                            },
+                            "select": {
+                              "$master": true
+                            }
+                          }
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    },
+                    {
+                      "id": "wdModal2259",
+                      "eventName": "w7inewzsn1d.success",
+                      "type": "platform",
+                      "handler": {
+                        "name": "invoke",
+                        "module": "platform",
+                        "params": {
+                          "component": "layout_modal1",
+                          "method": "close",
+                          "params": {
+                            "info": ""
+                          }
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    },
+                    {
+                      "id": "w5pf5ewfj1u",
+                      "eventName": "w7inewzsn1d.fail",
+                      "type": "platform",
+                      "handler": {
+                        "name": "showToast",
+                        "module": "platform",
+                        "params": {
+                          "duration": 1500,
+                          "icon": "error",
+                          "title": "订阅失败，请稍后重试"
+                        }
+                      },
+                      "isCapturePhase": false,
+                      "noPropagation": false
+                    }
+                  ],
+                  "directives": {
+                    ":if": true
+                  },
+                  "extra": {
+                    "attributeExtraData": {}
+                  }
+                }
+              ],
+              "directives": {
+                ":if": true
+              },
+              "extra": {}
+            }
+          ],
+          "listeners": [
+            {
+              "id": "wvdgktb4fdj",
+              "eventName": "close",
+              "type": "general-func",
+              "handler": {
+                "name": "iife",
+                "module": "general-func",
+                ":code": "({event}) => {\n  $w.app.common.getPlayerManager().showLeftSide(false, true)\n}",
+                "params": {}
+              },
+              "isCapturePhase": false,
+              "noPropagation": false
+            }
+          ],
+          "directives": {
+            ":if": true
+          },
+          "extra": {
+            "attributeExtraData": {}
+          }
+        }
+      ],
+      "data": {
+        "properties": {
+          "default": {
+            "type": "slot"
+          }
+        }
+      },
+      "name": "layout_qegz0wda",
+      "label": "订阅弹窗"
+    }
+  ],
+  "_ignoreResources": []
+}

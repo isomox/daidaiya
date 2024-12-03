@@ -6,26 +6,14 @@
     <t-search
       t-class-input="t-search__input"
       t-class-input-container="t-search__input-container"
-      placeholder="iphone 13 火热发售中"
+      placeholder="search your want tools"
       leftIcon=""
       disabled
     >
       <t-icon slot="left-icon" prefix="wr" name="search" size="40rpx" color="#bbb" />
     </t-search>
   </view>
-  <view class="swiper-wrap">
-    <t-swiper
-      wx:if="{{imgSrcs.length > 0}}"
-      current="{{current}}"
-      autoplay="{{autoplay}}"
-      duration="{{duration}}"
-      interval="{{interval}}"
-      navigation="{{navigation}}"
-      imageProps="{{swiperImageProps}}"
-      list="{{imgSrcs}}"
-      bind:click="navToActivityDetail"
-    />
-  </view>
+
 </view>
 <view class="home-page-container">
   <view class="home-page-tabs">

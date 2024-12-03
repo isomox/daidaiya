@@ -1,22 +1,22 @@
 export default [
   {
-    icon: 'home',
-    text: '首页',
-    url: 'pages/home/home',
+    icon: "home",
+    text: "Home",
+    url: "pages/home/home",
   },
   {
-    icon: 'sort',
-    text: '分类',
-    url: 'pages/goods/category/index',
+    icon: "tools",
+    text: "Tool",
+    url: "pages/goods/category/index",
   },
   {
-    icon: 'cart',
-    text: '购物车',
-    url: 'pages/cart/index',
+    icon: "logo-github",
+    text: "Misc",
+    url: "pages/cart/index",
   },
   {
-    icon: 'person',
-    text: '个人中心',
-    url: 'pages/usercenter/index',
+    icon: "user-circle",
+    text: "Info",
+    url: "pages/usercenter/index",
   },
 ];

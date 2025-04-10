@@ -1,0 +1,259 @@
+{
+	"easycom": {
+		"^tn-(.*)": "@/tuniao-ui/components/tn-$1/tn-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "你吩咐、我跑腿",
+				"navigationStyle": "custom"
+				
+			}
+		},
+		{
+			"path": "pages/hall/index",
+			"style": {
+				"navigationBarTitleText": "接单大厅"
+				
+				
+			}
+		},
+		{
+			"path": "pages/notice/index",
+			"style": {
+				"navigationBarTitleText": "消息通知"
+				
+			}
+		},
+		{
+			"path": "pages/uesr/index",
+			"style": {
+				"navigationBarTitleText": "用户中心",
+				"navigationStyle": "custom"
+				
+			}
+		},
+		{
+			"path": "pages/uesr/set",
+			"style": {
+				"navigationBarTitleText": "修改用户信息",
+				"navigationStyle": "custom"
+				
+			}
+		},
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "发起订单"
+				
+			}
+		},
+		{
+			"path": "pages/order/details",
+			"style": {
+				"navigationBarTitleText": "订单信息"
+				
+			}
+		},
+		{
+			"path": "pages/address/address",
+			"style": {
+				"navigationBarTitleText": "地址管理"
+				
+			}
+		},{
+			"path": "pages/address/edit",
+			"style": {
+				"navigationBarTitleText": "地址编辑"
+				
+			}
+		},{
+			"path": "pages/about/about",
+			"style": {
+				"navigationBarTitleText": "用户协议",
+				"navigationStyle": "custom"
+				
+			}
+		},{
+			"path": "pages/withdraw/withdraw",
+			"style": {
+				"navigationBarTitleText": "我的钱包",
+				"navigationStyle": "custom"
+				
+			}
+		},{
+			"path": "pages/member/member",
+			"style": {
+				"navigationBarTitleText": "跑男权益"			
+			}
+		},{
+			"path": "pages/king/king",
+			"style": {
+				"navigationBarTitleText": "用户介绍"			
+			}
+		},{
+			"path": "pages/king/myking",
+			"style": {
+				"navigationBarTitleText": "我的简历"			
+			}
+		},
+		{
+			"path": "pages/school/school",
+			"style": {
+				"navigationBarTitleText": "选择学校"			
+			}
+		},
+		{
+			"path": "pages/kuaidi/kuaidi",
+			"style": {
+				"navigationBarTitleText": "学校快递商家"			
+			}
+		},
+		{
+			"path": "pages/job/index",
+			"style": {
+				"navigationBarTitleText": "兼职大厅"			
+			}
+		},
+		{
+			"path": "pages/job/details",
+			"style": {
+				"navigationBarTitleText": "兼职详情"			
+			}
+		},
+		{
+			"path": "pages/team/team",
+			"style": {
+				"navigationBarTitleText": "我的团队"			
+			}
+		},
+		{
+			"path": "pages/shop/shop",
+			"style": {
+				"navigationBarTitleText": "校园商家"			
+			}
+		},
+		{
+			"path": "pages/goods/index",
+			"style": {
+				"navigationBarTitleText": "在线选购"			
+			}
+		},
+		{
+			"path": "pages/shop/payment",
+			"style": {
+				"navigationBarTitleText": "在线下单"			
+			}
+		},
+		{
+			"path": "pages/shop/list",
+			"style": {
+				"navigationBarTitleText": "我的团购"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shop/order",
+			"style": {
+				"navigationBarTitleText": "团购信息"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/coupon/coupon",
+			"style": {
+				"navigationBarTitleText": "我的优惠券"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/print/index",
+			"style": {
+				"navigationBarTitleText": "云打印"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/print/file",
+			"style": {
+				"navigationBarTitleText": "待打印文件"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/print/zhifu",
+			"style": {
+				"navigationBarTitleText": "下单"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/print/order",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/print/details",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+				// "navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/errands/errands",
+			"style": {
+				"navigationBarTitleText": "跑腿平台跑男说明",
+				"navigationStyle": "custom"
+			}
+		}
+		
+		
+		
+		
+	],
+	
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "图鸟官网",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff"
+	},
+	"tabBar": {
+		"color": "#949494",
+		"selectedColor": "#000000",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/tabbar/home_tn.png",
+			"selectedIconPath": "static/tabbar/home_tnnew.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/shop/shop",
+			"iconPath": "static/tabbar/shop_tn.png",
+			"selectedIconPath": "static/tabbar/shop_tnnew.png",
+			"text": "团购"
+		},{
+			"pagePath": "pages/hall/index",
+			"iconPath": "static/tabbar/information_tn.png",
+			"selectedIconPath": "static/tabbar/information_tnnew.png",
+			"text": "接单"
+		},
+		// {
+		// 	"pagePath": "pages/notice/index",
+		// 	"iconPath": "static/tabbar/case_tn.png",
+		// 	"selectedIconPath": "static/tabbar/case_tnnew.png",
+		// 	"text": "通知"
+		// },
+		{
+			"pagePath": "pages/uesr/index",
+			"iconPath": "static/tabbar/my_tn.png",
+			"selectedIconPath": "static/tabbar/my_tnnew.png",
+			"text": "我的"
+		}]
+	}
+	
+}

@@ -1,50 +1,90 @@
 <template>
 	<!--
-	 本页面模板教程：https://ext.dcloud.net.cn/plugin?id=2717
-	 uni-list 文档：https://ext.dcloud.net.cn/plugin?id=24
-	 uniCloud 文档：https://uniapp.dcloud.io/uniCloud/README
-	 unicloud-db 组件文档：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db-component
-	 DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
+	 This page displays daidai items based on the daidai schema
 	 -->
-	<view class="article">
+	<view class="daidai-detail">
 		<!-- #ifdef APP-PLUS -->
 		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
 		<!-- #endif -->
-		<view class="article-title">{{ title }}</view>
+
 		<unicloud-db v-slot:default="{ data, loading, error, options }" :options="formData" :collection="colList"
-			:getone="true" :manual="true" ref="detail" foreignKey="opendb-news-articles.user_id" @load="loadData">
+			:getone="true" :manual="true" ref="detail" foreignKey="daidai.user_id" @load="loadData">
 			<template v-if="!loading && data">
-				<uni-list :border="false">
-					<uni-list-item thumbSize="lg" :thumb="data.image">
-						<!-- 通过body插槽定义作者信息内容 -->
-						<template v-slot:body>
-							<view class="header-content">
-								<view class="uni-title">{{ data.user_id && data.user_id[0] && data.user_id[0].nickname
-									||
-									'未知' }}</view>
-							</view>
-						</template>
-						<template v-slot:footer>
-							<view class="footer">
-								<view class="uni-note">更新于
-									<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm"
+				<!-- Header with title -->
+				<view class="header">
+					<view class="article-title">{{ data.title }}</view>
+					<view class="status-tag" :class="data.status === 0 ? 'ongoing' : 'completed'">
+						{{ data.status === 0 ? '进行中' : '已完成' }}
+					</view>
+				</view>
+
+				<!-- User info and type card -->
+				<uni-card padding="10px 0">
+					<view class="user-info-card">
+						<view class="left-section">
+							<image class="avatar"
+								:src="data.user_id && data.user_id[0] && data.user_id[0].avatar || '/static/uni-center/headers.png'">
+							</image>
+							<view class="user-details">
+								<view class="username">{{ data.user_id && data.user_id[0] && data.user_id[0].nickname ||
+									'未知用户' }}</view>
+								<view class="date-info">
+									<uni-icons type="calendar" size="14"></uni-icons>
+									<uni-dateformat :date="data.create_date" format="yyyy-MM-dd hh:mm"
 										:threshold="[60000, 2592000000]" />
 								</view>
 							</view>
-						</template>
-					</uni-list-item>
-				</uni-list>
-				<view class="banner">
-					<!-- 文章开头，缩略图 -->
-					<image class="banner-img" :src="data.avatar" mode="widthFix"></image>
-					<!-- 文章摘要 -->
-					<view class="banner-title">
-						<text class="uni-ellipsis">{{ data.excerpt }}</text>
+						</view>
+						<view class="type-badge" :class="data.type === 1 ? 'provide' : 'need'">
+							{{ data.type === 1 ? '提供帮助' : '需要帮助' }}
+						</view>
 					</view>
+				</uni-card>
+
+
+
+				<!-- Content sections -->
+				<uni-section title="详细描述" type="line">
+					<view class="content-block">{{ data.description || '暂无描述' }}</view>
+				</uni-section>
+
+				<!-- Tags section -->
+				<uni-section title="标签" type="line" v-if="data.tags && data.tags.length">
+					<view class="tags-container">
+						<uni-tag v-for="(tag, index) in data.tags" :key="index" :text="tag" type="primary" size="small"
+							:circle="true"></uni-tag>
+					</view>
+				</uni-section>
+
+				<!-- Location section -->
+				<uni-section title="地点信息" type="line" v-if="data.location">
+					<view class="content-block location-block">
+						<view v-if="data.location.name" class="location-name">
+							<uni-icons type="location" size="16"></uni-icons>
+							<text>{{ data.location.name }}</text>
+						</view>
+						<view v-if="data.location.address" class="location-address">{{ data.location.address }}</view>
+					</view>
+				</uni-section>
+
+				<!-- Contact section with copy button -->
+				<uni-section title="联系方式" type="line" v-if="data.contact_info">
+					<view class="content-block contact-block">
+						<view class="contact-info">{{ data.contact_info }}</view>
+						<button class="copy-button" @click="copyContactInfo(data.contact_info)">复制</button>
+					</view>
+				</uni-section>
+
+			</template>
+
+			<template v-else-if="loading">
+				<view class="loading-container">
+					<uni-load-more status="loading" :contentText="loadMoreText"></uni-load-more>
 				</view>
-				<view class="article-content">
-					<rich-text :nodes="data.content"></rich-text>
-				</view>
+			</template>
+
+			<template v-else>
+				<uni-load-state :state="formData.noData"></uni-load-state>
 			</template>
 		</unicloud-db>
 	</view>
@@ -57,7 +97,6 @@ import uniNavBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-
 const uniShare = new UniShare()
 // #endif
 const db = uniCloud.database();
-const readNewsLog = db.collection('read-news-log')
 export default {
 	// #ifdef APP-PLUS
 	components: {
@@ -67,7 +106,6 @@ export default {
 		if (from == 'backbutton') {
 			if (uniShare.isShow) {
 				this.$nextTick(function () {
-					console.log(uniShare);
 					uniShare.hide()
 				})
 			}
@@ -77,12 +115,13 @@ export default {
 	// #endif
 	data() {
 		return {
-			// 当前显示 _id
 			id: "",
-			title: 'title',
-			// 数据表名
-			// 查询字段，多个字段用 , 分割
-			// field: 'user_id.nickname,user_id._id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
+			title: 'Daidai Item',
+			loadMoreText: {
+				contentdown: '上拉显示更多',
+				contentrefresh: '加载中...',
+				contentnomore: '没有更多数据了'
+			},
 			formData: {
 				noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 			}
@@ -93,22 +132,19 @@ export default {
 			return getApp().globalData.config
 		},
 		where() {
-			//拼接where条件 查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
 			return `_id =="${this.id}"`
 		},
 		colList() {
 			return [
-				db.collection('opendb-news-articles').where(this.where).field('user_id,_id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content').getTemp(),
-				db.collection('uni-id-users').field('_id,nickname').getTemp()
+				db.collection('daidai').where(this.where).field('_id,title,description,type,status,tags,location,contact_info,user_id,create_date,image').getTemp(),
+				db.collection('uni-id-users').field('_id,nickname,avatar').getTemp()
 			]
 		}
 	},
 	onLoad(event) {
-		//获取真实新闻id，通常 id 来自上一个页面
 		if (event.id) {
 			this.id = event.id
 		}
-		//若上一页传递了标题过来，则设置导航栏标题
 		if (event.title) {
 			this.title = event.title
 			uni.setNavigationBarTitle({
@@ -117,13 +153,12 @@ export default {
 		}
 	},
 	onReady() {
-		// 开始加载数据，修改 where 条件后才开始去加载 clinetDB 的数据 ，需要等组件渲染完毕后才开始执行 loadData，所以不能再 onLoad 中执行
-		if (this.id) { // ID 不为空，则发起查询
+		if (this.id) {
 			this.$refs.detail.loadData()
 		} else {
 			uni.showToast({
 				icon: 'none',
-				title: this.$t('listDetail.newsErr')
+				title: '无法加载详情数据'
 			})
 		}
 	},
@@ -133,160 +168,270 @@ export default {
 		}
 	},
 	methods: {
-		$log(...args) {
-			console.log('args', ...args, this.id)
-		},
-		setReadNewsLog() {
-			let item = {
-				"article_id": this.id,
-				"last_time": Date.now()
-			},
-				readNewsLog = uni.getStorageSync('readNewsLog') || [],
-				index = -1;
-			readNewsLog.forEach(({ article_id }, i) => {
-				if (article_id == item.article_id) {
-					index = i
-				}
-			})
-			if (index === -1) {
-				readNewsLog.push(item)
-			} else {
-				readNewsLog.splice(index, 1, item)
-			}
-			uni.setStorageSync('readNewsLog', readNewsLog)
-			console.log(readNewsLog);
-		},
-		setFavorite() {
-			if (uniCloud.getCurrentUserInfo().tokenExpired < Date.now()) {
-				return console.log('未登录用户');
-			}
-			let article_id = this.id,
-				last_time = Date.now();
-			console.log({ article_id, last_time });
-			readNewsLog.where(`"article_id" == "${article_id}" && "user_id"==$env.uid`)
-				.update({ last_time })
-				.then(({ result: { updated } }) => {
-					console.log('updated', updated);
-					if (!updated) {
-						readNewsLog.add({ article_id }).then(e => {
-							console.log(e);
-						}).catch(err => {
-							console.log(err);
-						})
-					}
-				}).catch(err => {
-					console.log(err);
-				})
-		},
 		loadData(data) {
-			//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题
-			if (this.title == '' && data[0].title) {
-				this.title = data[0].title
-				uni.setNavigationBarTitle({
-					title: data[0].title
-				});
-
+			if (!data || data.length === 0) {
+				this.formData.noData = '<p style="text-align:center;color:#666">未找到数据</p>';
+				return;
 			}
-			this.setReadNewsLog();
+
+			if (!this.title || this.title === 'Daidai Item') {
+				this.title = data.title || 'Daidai Item';
+				uni.setNavigationBarTitle({
+					title: this.title
+				});
+			}
 		},
-		/**
-		 * followClick
-		 * 点击关注
-		 */
-		followClick() {
-			uni.showToast({
-				title: this.$t('listDetail.follow'),
-				icon: 'none'
+
+		contactUser() {
+			if (!this.$refs.detail.dataList || !this.$refs.detail.dataList.length) {
+				uni.showToast({
+					title: '数据加载中，请稍候',
+					icon: 'none'
+				});
+				return;
+			}
+
+			const data = this.$refs.detail.dataList[0];
+			if (data && data.contact_info) {
+				uni.showModal({
+					title: '联系方式',
+					content: data.contact_info,
+					confirmText: '复制',
+					success: (res) => {
+						if (res.confirm) {
+							uni.setClipboardData({
+								data: data.contact_info,
+								success: () => {
+									uni.showToast({
+										title: '联系方式已复制',
+										icon: 'success'
+									});
+								}
+							});
+						}
+					}
+				});
+			} else {
+				uni.showToast({
+					title: '暂无联系方式',
+					icon: 'none'
+				});
+			}
+		},
+
+		copyContactInfo(contactInfo) {
+			uni.setClipboardData({
+				data: contactInfo,
+				success: () => {
+					uni.showToast({
+						title: '联系方式已复制',
+						icon: 'success'
+					});
+				}
 			});
 		}
 	}
 }
 </script>
 
-<style scoped>
-.header-content {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	font-size: 14px;
-}
+<style lang="scss">
+.daidai-detail {
+	background-color: #f8f8f8;
+	min-height: 100vh;
+	padding-bottom: 30px;
 
-/* 标题 */
-.uni-title {
-	display: flex;
-	margin-bottom: 5px;
-	font-size: 14px;
-	font-weight: bold;
-	color: #3b4144;
-}
+	.header {
+		padding: 20px 15px 10px;
+		position: relative;
 
-/* 描述 额外文本 */
-.uni-note {
-	color: #999;
-	font-size: 12px;
+		.article-title {
+			font-size: 22px;
+			font-weight: bold;
+			color: #333;
+			padding: 0;
+			margin-bottom: 10px;
+			line-height: 1.4;
+		}
 
-	/* #ifndef APP-NVUE */
-	display: flex;
-	/* #endif */
-	flex-direction: row;
-	align-items: center;
-}
+		.status-tag {
+			position: absolute;
+			right: 15px;
+			top: 20px;
+			padding: 3px 10px;
+			border-radius: 15px;
+			font-size: 12px;
+			color: white;
 
-.footer {
-	display: flex;
-	align-items: center;
-}
+			&.ongoing {
+				background-color: #2979ff;
+			}
 
-.footer-button {
-	display: flex;
-	align-items: center;
-	font-size: 12px;
-	height: 30px;
-	color: #fff;
-	background-color: #ff5a5f;
-}
+			&.completed {
+				background-color: #8f8f8f;
+			}
+		}
+	}
 
-.banner {
-	position: relative;
-	margin: 0 15px;
-	height: 180px;
-	overflow: hidden;
-}
+	.user-info-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 15px;
 
-.banner-img {
-	position: absolute;
-	width: 100%;
-}
+		.left-section {
+			display: flex;
+			align-items: center;
 
-.banner-title {
-	display: flex;
-	align-items: center;
-	position: absolute;
-	padding: 0 15px;
-	width: 100%;
-	bottom: 0;
-	height: 30px;
-	font-size: 14px;
-	color: #fff;
-	background: rgba(0, 0, 0, 0.4);
-	overflow: hidden;
-	box-sizing: border-box;
-}
+			.avatar {
+				width: 45px;
+				height: 45px;
+				border-radius: 50%;
+				margin-right: 10px;
+			}
 
-.uni-ellipsis {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
+			.user-details {
+				.username {
+					font-size: 16px;
+					font-weight: 500;
+					color: #333;
+					margin-bottom: 4px;
+				}
 
-.article-title {
-	padding: 20px 15px;
-	padding-bottom: 0;
-}
+				.date-info {
+					display: flex;
+					align-items: center;
+					font-size: 12px;
+					color: #999;
 
-.article-content {
-	padding: 15px;
-	font-size: 15px;
-	overflow: hidden;
+					.uni-icons {
+						margin-right: 4px;
+					}
+				}
+			}
+		}
+
+		.type-badge {
+			padding: 5px 10px;
+			border-radius: 4px;
+			font-size: 13px;
+			color: white;
+
+			&.provide {
+				background-color: #04be02;
+				/* Green for providing help */
+			}
+
+			&.need {
+				background-color: #ff7500;
+				/* Orange for needing help */
+			}
+		}
+	}
+
+	.banner {
+		margin: 15px;
+		height: 180px;
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+		.banner-img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.content-block {
+		padding: 15px;
+		background-color: #fff;
+		line-height: 1.6;
+		color: #333;
+		font-size: 15px;
+	}
+
+	.contact-block {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.contact-info {
+			flex: 1;
+			word-break: break-all;
+			padding-right: 15px;
+		}
+
+		.copy-button {
+			flex-shrink: 0;
+			background-color: #2979ff;
+			color: white;
+			font-size: 14px;
+			padding: 8px 15px;
+			border-radius: 4px;
+			height: auto;
+			line-height: 1;
+		}
+	}
+
+	.tags-container {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 10px 15px;
+		background-color: #fff;
+
+		.uni-tag {
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+	}
+
+	.location-block {
+		.location-name {
+			display: flex;
+			align-items: center;
+			font-weight: 500;
+			margin-bottom: 5px;
+
+			.uni-icons {
+				margin-right: 5px;
+				color: #2979ff;
+			}
+		}
+
+		.location-address {
+			color: #666;
+			font-size: 14px;
+			padding-left: 21px;
+		}
+	}
+
+	.action-buttons {
+		display: flex;
+		justify-content: space-around;
+		padding: 20px 15px;
+
+		button {
+			width: 45%;
+			height: 45px;
+			line-height: 45px;
+			border-radius: 23px;
+			font-size: 16px;
+			font-weight: 500;
+
+			&.contact-button {
+				background-color: #2979ff;
+				color: white;
+			}
+
+			&.share-button {
+				background-color: white;
+				color: #2979ff;
+				border: 1px solid #2979ff;
+			}
+		}
+	}
+
+	.loading-container {
+		padding: 30px 0;
+	}
 }
 </style>

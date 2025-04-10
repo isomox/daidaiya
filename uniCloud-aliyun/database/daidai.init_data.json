@@ -1,0 +1,85 @@
+[
+  {
+    "_id": "daidai_sample_001",
+    "title": "提供搬家帮助",
+    "description": "本人有车，周末可以帮忙搬家，市内均可。",
+    "type": 1,
+    "status": 0,
+    "tags": ["搬家", "有车", "周末"],
+    "location": {
+      "name": "市中心",
+      "address": "朝阳区CBD",
+      "longitude": 116.480881,
+      "latitude": 39.98941
+    },
+    "contact_info": "微信: helper123",
+    "user_id": "user_sample_001",
+    "create_date": 1712682000000,
+    "last_modify_date": 1712682000000,
+    "image": "/static/images/help_1.jpg"
+  },
+  {
+    "_id": "daidai_sample_002",
+    "title": "需要JavaScript编程辅导",
+    "description": "初学前端开发，希望有人可以指导JavaScript基础和Vue框架使用。每周可以线上辅导1-2小时，可支付辅导费。",
+    "type": 2,
+    "status": 0,
+    "tags": ["编程", "JavaScript", "Vue", "辅导"],
+    "contact_info": "电话: 13800138000",
+    "user_id": "user_sample_002",
+    "create_date": 1712595600000,
+    "last_modify_date": 1712595600000,
+    "image": "/static/images/help_2.jpg"
+  },
+  {
+    "_id": "daidai_sample_003",
+    "title": "宠物照看服务",
+    "description": "有多年宠物饲养经验，可提供宠物寄养和日常照顾，包括喂食、遛狗、陪伴等。",
+    "type": 1,
+    "status": 0,
+    "tags": ["宠物", "寄养", "照顾"],
+    "location": {
+      "name": "西城区",
+      "address": "西城区广安门外大街",
+      "longitude": 116.346346,
+      "latitude": 39.899168
+    },
+    "contact_info": "QQ: 987654321",
+    "user_id": "user_sample_003",
+    "create_date": 1712509200000,
+    "last_modify_date": 1712509200000,
+    "image": "/static/images/help_3.jpg"
+  },
+  {
+    "_id": "daidai_sample_004",
+    "title": "需要托运行李",
+    "description": "下周要回老家，行李较多，需要有人帮忙托运几个大箱子到火车站。",
+    "type": 2,
+    "status": 0,
+    "tags": ["托运", "行李", "火车站"],
+    "location": {
+      "name": "海淀区",
+      "address": "海淀区中关村",
+      "longitude": 116.310316,
+      "latitude": 39.986434
+    },
+    "contact_info": "邮箱: help@example.com",
+    "user_id": "user_sample_004",
+    "create_date": 1712422800000,
+    "last_modify_date": 1712422800000,
+    "image": "/static/images/help_4.jpg"
+  },
+  {
+    "_id": "daidai_sample_005",
+    "title": "提供英语口语练习",
+    "description": "英语专业毕业，可以提供免费的英语口语练习和纠正发音，适合想提高口语的朋友。",
+    "type": 1,
+    "status": 1,
+    "tags": ["英语", "口语", "免费"],
+    "contact_info": "微信: englishhelp",
+    "user_id": "user_sample_005",
+    "create_date": 1712336400000,
+    "last_modify_date": 1712336400000,
+    "image": "/static/images/help_5.jpg"
+  }
+]

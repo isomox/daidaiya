@@ -15,16 +15,16 @@
 			<!-- 搜索历史 -->
 			<view class="word-container" v-if="localSearchList.length">
 				<view class="word-container_header">
-					<text class="word-container_header-text">搜索历史</text>
+					<text class="word-container_header-text">{{ $t('search.searchHistory') }}</text>
 					<uni-icons v-if="!localSearchListDel" @click="localSearchListDel = true" class="search-icons"
 						style="padding-right: 0;" :color="iconColor" size="18" type="trash"></uni-icons>
 					<view v-else class="flex-center flex-row" style="font-weight: 500;justify-content: space-between;">
 						<text
 							style="font-size: 22rpx;color: #666;padding-top:4rpx;padding-bottom:4rpx;padding-right:20rpx;"
-							@click="LocalSearchListClear">全部删除</text>
+							@click="LocalSearchListClear">{{ $t('search.deleteAll') }}</text>
 						<text
 							style="font-size: 22rpx;color: #c0402b;padding-top:4rpx;padding-bottom:4rpx;padding-left:20rpx;"
-							@click="localSearchListDel = false">完成</text>
+							@click="localSearchListDel = false">{{ $t('search.complete') }}</text>
 					</view>
 				</view>
 
@@ -40,7 +40,7 @@
 			<view class="word-container">
 				<view class="word-container_header">
 					<view class="flex-center flex-row">
-						<text class="word-container_header-text">搜索发现</text>
+						<text class="word-container_header-text">{{ $t('search.searchDiscovery') }}</text>
 						<uni-icons v-if="!netHotListIsHide" class="search-icons" :color="iconColor" size="14"
 							type="reload" @click="searchHotRefresh"></uni-icons>
 					</view>
@@ -71,9 +71,16 @@
 		<!-- 搜索联想 -->
 		<view class="search-associative" v-if="associativeShow">
 			<uni-list>
-				<uni-list-item v-for="(item, index) in associativeList" :key="item._id" :ellipsis="1" :title="item.name"
+				<uni-list-item v-for="(item, index) in associativeList" :key="item._id" :title="item.title"
+					:note="item.status !== undefined ? ((item.status === 0 || item.status === '0') ? '进行中' : '已完成') : ''"
 					@click="associativeClick(item)" show-extra-icon clickable
 					:extra-icon="{ size: 18, color: iconColor, type: 'search' }">
+					<template v-slot:footer>
+						<view class="associative-tags" v-if="item.tags && item.tags.length">
+							<uni-tag v-for="(tag, tagIndex) in item.tags" :key="tagIndex" :text="tag" size="small"
+								:circle="true" />
+						</view>
+					</template>
 				</uni-list-item>
 			</uni-list>
 		</view>
@@ -86,9 +93,9 @@
  * @description uniCloud云端一体搜索模板，自带下拉候选、历史搜索、热搜。无需再开发服务器代码
  */
 const searchLogDbName = 'opendb-search-log'; // 搜索记录数据库
-const mallGoodsDbName = 'opendb-news-articles'; // 文章数据库
+const mallGoodsDbName = 'daidai'; // 文章数据库改为使用与list.vue相同的daidai集合
 const associativeSearchField = 'title'; // 联想时，搜索框值检索数据库字段名
-const associativeField = '_id,title'; // 联想列表每一项携带的字段
+const associativeField = '_id,title,type,status,tags,image'; // 联想列表每一项携带的字段，与list.vue保持一致
 const localSearchListKey = '__local_search_history'; //	本地历史存储字段名
 
 // 数组去重
@@ -181,15 +188,16 @@ export default {
 			console.log("res: ", res);
 		},
 		confirm(res) {
-			// 键盘确认
-			this.search(res.value);
+			// 键盘确认 - Keep search results on page instead of redirecting
+			this.searchOnPage(res.value);
 		},
 		cancel(res) {
 			uni.hideKeyboard();
 			this.searchText = '';
-			this.loadList();
+			// Clear search results when cancelled
+			this.associativeList = [];
 		},
-		search(value) {
+		searchOnPage(value) {
 			if (!value && !this.hotWorld) {
 				return;
 			}
@@ -199,14 +207,25 @@ export default {
 				}
 
 				this.localSearchListManage(value);
+				this.searchLogDbAdd(value);
 
-				this.searchLogDbAdd(value)
+				// Manually trigger a search to refresh results
+				this.mallGoodsDb.where({
+					[associativeSearchField]: new RegExp(value, 'gi'),
+				}).field(associativeField).get().then(res => {
+					this.associativeList = res.result.data;
+				});
 			} else if (this.hotWorld) {
-				this.searchText = this.hotWorld
+				this.searchText = this.hotWorld;
+				// Search using hot word
+				this.mallGoodsDb.where({
+					[associativeSearchField]: new RegExp(this.hotWorld, 'gi'),
+				}).field(associativeField).get().then(res => {
+					this.associativeList = res.result.data;
+				});
 			}
 
 			uni.hideKeyboard();
-			this.loadList(this.searchText);
 		},
 		localSearchListManage(word) {
 			let list = uni.getStorageSync(localSearchListKey);
@@ -223,8 +242,8 @@ export default {
 		},
 		LocalSearchListClear() {
 			uni.showModal({
-				content: "确认清空搜索历史吗",
-				confirmText: "删除",
+				content: this.$t('search.deleteTip'),
+				confirmText: this.$t('search.delete'),
 				confirmColor: 'red',
 				cancelColor: '#808080',
 				success: res => {
@@ -301,10 +320,11 @@ export default {
 		},
 		associativeClick(item) {
 			/**
-			 * 注意：这里用户根据自己的业务需要，选择跳转的页面即可
+			 * Navigate directly to the detail page when clicking a search result
 			 */
-			console.log("associativeClick: ", item);
-			this.loadList(item.title);
+			uni.navigateTo({
+				url: '/pages/list/detail?id=' + item._id + '&title=' + item.title
+			});
 		},
 		loadList(text = '') {
 			getApp().globalData.searchText = text;
@@ -314,7 +334,14 @@ export default {
 		},
 		backPage() {
 			uni.navigateBack();
-		}
+		},
+		search(value) {
+			if (!value && !this.hotWorld) {
+				return;
+			}
+			// Use the searchOnPage method to stay on current page
+			this.searchOnPage(value);
+		},
 	},
 
 	watch: {
@@ -516,5 +543,16 @@ $word-container_header-height: 72rpx;
 			}
 		}
 	}
+}
+
+.associative-tags {
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-top: 10rpx;
+}
+
+.associative-tags .uni-tag {
+	margin-right: 10rpx;
+	margin-bottom: 5rpx;
 }
 </style>

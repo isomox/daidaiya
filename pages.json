@@ -60,6 +60,13 @@
         "navigationBarTitleText": "阅读记录",
         "enablePullDownRefresh": true
       }
+    },
+    {
+      "path": "pages/ucenter/daidai/publish",
+      "style": {
+        "navigationBarTitleText": "发布互助信息",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "subPackages": [

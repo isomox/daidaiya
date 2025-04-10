@@ -1,0 +1,116 @@
+{
+  "bsonType": "object",
+  "required": ["title", "status", "type", "tags", "create_date", "user_id"],
+  "permission": {
+    "read": true,
+    "create": "auth.uid != null",
+    "update": "doc.user_id == auth.uid || 'admin' in auth.role",
+    "delete": "doc.user_id == auth.uid || 'admin' in auth.role"
+  },
+  "properties": {
+    "_id": {
+      "description": "ID，系统自动生成"
+    },
+    "title": {
+      "bsonType": "string",
+      "description": "标题",
+      "maxLength": 100,
+      "title": "标题"
+    },
+    "description": {
+      "bsonType": "string",
+      "description": "详细描述",
+      "title": "描述"
+    },
+    "type": {
+      "bsonType": "int",
+      "description": "类型：1-提供帮助, 2-需要帮助",
+      "title": "类型",
+      "enum": [1, 2],
+      "enumDescription": {
+        "1": "提供帮助",
+        "2": "需要帮助"
+      }
+    },
+    "status": {
+      "bsonType": "int",
+      "description": "状态：0-进行中, 1-已完成",
+      "title": "状态",
+      "enum": [0, 1],
+      "enumDescription": {
+        "0": "进行中",
+        "1": "已完成"
+      },
+      "defaultValue": 0
+    },
+    "tags": {
+      "bsonType": "array",
+      "description": "标签",
+      "title": "标签",
+      "items": {
+        "bsonType": "string"
+      }
+    },
+    "location": {
+      "bsonType": "object",
+      "description": "地点",
+      "title": "地点",
+      "properties": {
+        "name": {
+          "bsonType": "string",
+          "description": "地点名称",
+          "title": "地点名称"
+        },
+        "address": {
+          "bsonType": "string",
+          "description": "详细地址",
+          "title": "详细地址"
+        },
+        "longitude": {
+          "bsonType": "number",
+          "description": "经度",
+          "title": "经度"
+        },
+        "latitude": {
+          "bsonType": "number",
+          "description": "纬度",
+          "title": "纬度"
+        }
+      }
+    },
+    "contact_info": {
+      "bsonType": "string",
+      "description": "联系方式",
+      "title": "联系方式"
+    },
+    "user_id": {
+      "bsonType": "string",
+      "description": "发布者ID，参考uni-id-users表",
+      "foreignKey": "uni-id-users._id",
+      "title": "发布者ID"
+    },
+    "create_date": {
+      "bsonType": "timestamp",
+      "description": "创建时间",
+      "title": "创建时间",
+      "defaultValue": {
+        "$env": "now"
+      }
+    },
+    "last_modify_date": {
+      "bsonType": "timestamp",
+      "description": "最后修改时间",
+      "title": "最后修改时间",
+      "defaultValue": {
+        "$env": "now"
+      }
+    },
+    "image": {
+      "bsonType": "string",
+      "description": "封面图片",
+      "title": "封面图片",
+      "pattern": "^(cloud://|https?://|/|./|@/)[^\\s]+",
+      "defaultValue": ""
+    }
+  }
+}

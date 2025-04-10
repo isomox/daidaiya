@@ -1,7 +1,10 @@
 {
   "pages": [
     {
-      "path": "pages/list/list"
+      "path": "pages/list/list",
+      "style": {
+        "enablePullDownRefresh": true
+      }
     },
     {
       "path": "pages/grid/grid"

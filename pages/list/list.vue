@@ -92,7 +92,9 @@ export default {
 			where: '"status" == 0', // 过滤条件：只显示进行中的项目
 			orderby: 'last_modify_date desc', // 按 last_modify_date 降序排序
 			showRefresh: false,
-			listHight: 0
+			listHight: 0,
+			loading: false, // Track loading state
+			_lastRefreshTime: 0 // Track last refresh time to prevent multiple refreshes
 		}
 	},
 	async onReady() {
@@ -104,6 +106,11 @@ export default {
 	},
 	async onShow() {
 		getApp().globalData.searchText = ''
+	},
+
+	// Support standard pull-down-refresh for platforms that support it
+	onPullDownRefresh() {
+		this.refresh()
 	},
 	methods: {
 		retry() {

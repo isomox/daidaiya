@@ -1,21 +1,10 @@
 {
   "pages": [
     {
-      "path": "pages/list/list",
-      "style": {
-        // #ifndef APP
-        "enablePullDownRefresh": true,
-        // #endif
-        "navigationStyle": "custom"
-      }
+      "path": "pages/list/list"
     },
     {
-      "path": "pages/grid/grid",
-      "style": {
-        //#ifndef MP
-        "navigationStyle": "custom"
-        //#endif
-      }
+      "path": "pages/grid/grid"
     },
     {
       "path": "pages/list/search/search",
@@ -193,7 +182,7 @@
     },
     // #endif
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-starter",
+    "navigationBarTitleText": "DaiDaiYa",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8",
     "enablePullDownRefresh": false,

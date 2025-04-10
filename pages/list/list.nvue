@@ -1,16 +1,5 @@
 <template>
 	<view class="pages">
-		<!-- #ifndef H5 -->
-		<statusBar></statusBar>
-		<!-- #endif -->
-
-		<!-- 搜索功能 -->
-		<view class="uni-search-box">
-			<uni-search-bar v-model="keyword" ref="searchBar" radius="100" cancelButton="none" disabled
-				:placeholder="inputPlaceholder" />
-			<view class="cover-search-bar" @click="searchClick"></view>
-		</view>
-
 		<unicloud-db ref='udb' v-slot:default="{ data, pagination, hasMore, loading, error, options }"
 			@error="onqueryerror" :collection="colList" :page-size="10">
 			<!-- 基于 uni-list 的页面布局 field="user_id.nickname"-->
@@ -62,8 +51,7 @@
 let cdbRef;
 import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 
-import Gps from '@/uni_modules/json-gps/js_sdk/gps.js';
-const gps = new Gps(), db = uniCloud.database();
+const db = uniCloud.database();
 
 export default {
 	components: {

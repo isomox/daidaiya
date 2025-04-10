@@ -218,10 +218,10 @@
         "text": "列表"
       },
       {
-        "pagePath": "pages/grid/grid",
+        "pagePath": "pages/list/search/search",
         "iconPath": "static/tabbar/grid.png",
         "selectedIconPath": "static/tabbar/grid_active.png",
-        "text": "宫格"
+        "text": "搜索"
       },
       {
         "pagePath": "pages/ucenter/ucenter",

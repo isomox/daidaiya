@@ -19,8 +19,9 @@
 						<!-- 通过body插槽定义作者信息内容 -->
 						<template v-slot:body>
 							<view class="header-content">
-								<view class="uni-title">{{ data.user_id && data.user_id[0] && data.user_id[0].nickname ||
-									'未知'}}</view>
+								<view class="uni-title">{{ data.user_id && data.user_id[0] && data.user_id[0].nickname
+									||
+									'未知' }}</view>
 							</view>
 						</template>
 						<template v-slot:footer>
@@ -197,95 +198,7 @@ export default {
 				title: this.$t('listDetail.follow'),
 				icon: 'none'
 			});
-		},
-		/**
-		 * 分享该文章
-		 */
-		// #ifdef APP-PLUS
-		shareClick() {
-			let {
-				_id,
-				title,
-				excerpt,
-				avatar
-			} = this.$refs.detail.dataList
-			console.log(JSON.stringify({
-				_id,
-				title,
-				excerpt,
-				avatar
-			}));
-			uniShare.show({
-				content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
-					type: 0,
-					href: this.uniStarterConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
-					title: this.title,
-					summary: excerpt,
-					imageUrl: avatar + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
-				},
-				menus: [{
-					"img": "/static/app/sharemenu/wechatfriend.png",
-					"text": this.$t('common.wechatFriends'),
-					"share": {
-						"provider": "weixin",
-						"scene": "WXSceneSession"
-					}
-				},
-				{
-					"img": "/static/app/sharemenu/wechatmoments.png",
-					"text": this.$t('common.wechatBbs'),
-					"share": {
-						"provider": "weixin",
-						"scene": "WXSceneTimeline"
-					}
-				},
-				{
-					"img": "/static/app/sharemenu/mp_weixin.png",
-					"text": this.$t('common.wechatApplet'),
-					"share": {
-						provider: "weixin",
-						scene: "WXSceneSession",
-						type: 5,
-						miniProgram: {
-							id: this.uniStarterConfig.mp.weixin.id,
-							path: `/pages/list/detail?id=${_id}&title=${title}`,
-							webUrl: this.uniStarterConfig.h5.url +
-								`/#/pages/list/detail?id=${_id}&title=${title}`,
-							type: 0
-						},
-					}
-				},
-				{
-					"img": "/static/app/sharemenu/weibo.png",
-					"text": this.$t('common.weibo'),
-					"share": {
-						"provider": "sinaweibo"
-					}
-				},
-				{
-					"img": "/static/app/sharemenu/qq.png",
-					"text": "QQ",
-					"share": {
-						"provider": "qq"
-					}
-				},
-				{
-					"img": "/static/app/sharemenu/copyurl.png",
-					"text": this.$t('common.copy'),
-					"share": "copyurl"
-				},
-				{
-					"img": "/static/app/sharemenu/more.png",
-					"text": this.$t('common.more'),
-					"share": "shareSystem"
-				}
-				],
-				cancelText: this.$t('common.cancelShare'),
-			}, e => { //callback
-				console.log(e);
-			})
 		}
-		// #endif
 	}
 }
 </script>
